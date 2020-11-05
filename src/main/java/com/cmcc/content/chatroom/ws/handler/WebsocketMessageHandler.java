@@ -40,7 +40,7 @@ public class WebsocketMessageHandler extends SimpleChannelInboundHandler<TextWeb
                     .addListener(ChannelFutureListener.CLOSE);
             return;
         }
-        WebSocketChannelHolder.putChannelHandlerContext(input.getUserId(), ctx);
+        WebSocketChannelHolder.putChannel(input.getUserId(), ctx.channel());
 
     }
 
