@@ -12,3 +12,58 @@ websocket:
     readerIdleTimeSeconds: 600
     writerIdleTimeSeconds: 0
     allIdleTimeSeconds: 0
+
+spring:
+  cloud:
+    ##RocketMQ配置
+    stream:
+      rocketmq:
+        bindings:
+          talentEnterpriseOutput:
+            producer:
+              group: talent-enterprise-output-group-dev
+              sync: true
+          updateEnterpriseInput:
+            consumer:
+              orderly: false
+              tags: update_enterprise
+          updateTalentEnterpriseInput:
+            consumer:
+              orderly: false
+              tags: update_talent_enterprise
+          enterpriseStatisticInput:
+            consumer:
+              orderly: false
+              tags: enterprise_statistic
+        binder:
+          name-server: 192.168.1.241:9876
+      bindings:
+        updateEnterpriseInput:
+          destination: talent-enterprise-topic-dev
+          group: update-enterprise-input-group-dev
+          content-type: application/json
+          consumer:
+            concurrency: 5
+        updateTalentEnterpriseInput:
+          destination: talent-enterprise-topic-dev
+          content-type: application/json
+          group: update-talent-enterprise-input-group-dev
+          consumer:
+            concurrency: 5
+        enterpriseStatisticInput:
+          destination: talent-enterprise-topic-dev
+          content-type: application/json
+          group: enterprise-statistic-input-group-dev
+          consumer:
+            concurrency: 5
+        talentEnterpriseOutput:
+          destination: talent-enterprise-topic-dev
+          content-type: application/json
+
+  redis:
+    host: 192.168.1.253
+    port: 6369
+    password: Iindeed1008
+    database: 11
+    custom:
+      expireTime: 3600
