@@ -1,1 +1,19 @@
+spring:
+  application:
+    name: chatroom
+  profiles:
+    active: dev
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+  endpoint:
+    shutdown:
+      enabled: true
+
+
+
 

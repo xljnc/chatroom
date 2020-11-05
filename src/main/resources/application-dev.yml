@@ -1,0 +1,14 @@
+server:
+  port: 8081
+
+debug: true
+
+websocket:
+  netty:
+    ip: 0.0.0.0
+    port: 1024
+    path: /channel
+    maxFrameSize: 65536
+    readerIdleTimeSeconds: 600
+    writerIdleTimeSeconds: 0
+    allIdleTimeSeconds: 0
