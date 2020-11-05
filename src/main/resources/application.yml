@@ -3,6 +3,8 @@ spring:
     name: chatroom
   profiles:
     active: dev
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
 
 management:
   endpoints:

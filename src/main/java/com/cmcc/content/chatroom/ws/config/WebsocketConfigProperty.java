@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "websocket.netty")
 @Data
 @Component
-public class NettyConfigProperty {
+public class WebsocketConfigProperty {
 
     private String ip;
 
