@@ -1,4 +1,4 @@
-package com.cmcc.content.chatroom.core;
+package com.wt.content.chatroom.core;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

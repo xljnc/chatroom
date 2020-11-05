@@ -1,7 +1,7 @@
-package com.cmcc.content.chatroom.ws.server;
+package com.wt.content.chatroom.ws.server;
 
-import com.cmcc.content.chatroom.ws.config.WebsocketConfigProperty;
-import com.cmcc.content.chatroom.ws.handler.WebsocketMessageHandler;
+import com.wt.content.chatroom.ws.config.WebsocketConfigProperty;
+import com.wt.content.chatroom.ws.handler.WebsocketMessageHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;

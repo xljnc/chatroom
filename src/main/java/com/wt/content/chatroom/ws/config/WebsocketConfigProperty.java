@@ -1,4 +1,4 @@
-package com.cmcc.content.chatroom.ws.config;
+package com.wt.content.chatroom.ws.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

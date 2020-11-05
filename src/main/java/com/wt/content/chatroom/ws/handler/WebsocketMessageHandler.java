@@ -1,9 +1,9 @@
-package com.cmcc.content.chatroom.ws.handler;
+package com.wt.content.chatroom.ws.handler;
 
-import com.cmcc.content.chatroom.core.ChatroomConfig;
-import com.cmcc.content.chatroom.util.JacksonUtil;
-import com.cmcc.content.chatroom.ws.holder.WebSocketChannelHolder;
-import com.cmcc.content.chatroom.ws.protocol.WebsocketInboundMessage;
+import com.wt.content.chatroom.core.ChatroomConfig;
+import com.wt.content.chatroom.util.JacksonUtil;
+import com.wt.content.chatroom.ws.holder.WebSocketChannelHolder;
+import com.wt.content.chatroom.ws.protocol.WebsocketInboundMessage;
 import io.netty.channel.*;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;

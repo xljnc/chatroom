@@ -1,4 +1,4 @@
-package com.cmcc.content.chatroom.util;
+package com.wt.content.chatroom.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

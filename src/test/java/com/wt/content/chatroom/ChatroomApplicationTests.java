@@ -1,4 +1,4 @@
-package com.cmcc.content.chatroom;
+package com.wt.content.chatroom;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

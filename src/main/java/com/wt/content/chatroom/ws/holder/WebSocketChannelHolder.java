@@ -1,4 +1,4 @@
-package com.cmcc.content.chatroom.ws.holder;
+package com.wt.content.chatroom.ws.holder;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;

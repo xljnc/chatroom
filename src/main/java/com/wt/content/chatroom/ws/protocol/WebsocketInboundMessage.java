@@ -1,4 +1,4 @@
-package com.cmcc.content.chatroom.ws.protocol;
+package com.wt.content.chatroom.ws.protocol;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
