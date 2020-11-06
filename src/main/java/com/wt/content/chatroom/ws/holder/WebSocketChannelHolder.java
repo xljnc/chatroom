@@ -1,9 +1,8 @@
 package com.wt.content.chatroom.ws.holder;
 
-import com.wt.content.chatroom.core.ChatroomConfig;
+import com.wt.content.chatroom.config.ChatroomConfig;
 import com.wt.content.chatroom.util.RedisUtil;
 import io.netty.channel.Channel;
-import io.netty.channel.ChannelHandlerContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;

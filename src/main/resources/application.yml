@@ -16,6 +16,8 @@ management:
     shutdown:
       enabled: true
 
-
+chatroom:
+  topic:
+    connect: user-connect
 
 

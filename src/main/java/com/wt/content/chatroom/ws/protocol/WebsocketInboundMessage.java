@@ -22,7 +22,7 @@ public class WebsocketInboundMessage implements Serializable {
 
     private String userId;
 
-    private String body;
+    private Object body;
 
     public boolean validate() {
         return StringUtils.hasText(topic) && StringUtils.hasText(userId);
