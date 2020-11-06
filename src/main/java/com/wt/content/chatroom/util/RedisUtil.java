@@ -22,18 +22,12 @@ import java.util.concurrent.TimeUnit;
 @ConditionalOnMissingBean(RedisUtil.class)
 public class RedisUtil {
 
-    private static String LOCK_PREFIX = "LOCK::KEY_";
-
-    private static Long LOCK_EXPIRE = 60 * 1000L;
-
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
     @Autowired
     private ValueOperations<String, Object> valueOperations;
 
-    @Value("${spring.redis.custom.defaultExpireTime:7200}")
-    private Long defaultExpireTime;
 
     /**
      * @param key
@@ -84,7 +78,7 @@ public class RedisUtil {
      * @description 设置String类型的Value
      */
     public void setStringValue(String key, String value) {
-        valueOperations.set(key, value, defaultExpireTime, TimeUnit.SECONDS);
+        valueOperations.set(key, value);
     }
 
     /**
@@ -125,7 +119,7 @@ public class RedisUtil {
      * @param value
      */
     public void setObjectValue(String key, Object value) {
-        valueOperations.set(key, value, defaultExpireTime, TimeUnit.SECONDS);
+        valueOperations.set(key, value);
     }
 
     /**
@@ -145,43 +139,4 @@ public class RedisUtil {
         redisTemplate.convertAndSend(channel, message);
     }
 
-    /**
-     * 获取分布式锁
-     *
-     * @param key
-     * @return
-     */
-    public boolean acquireLock(String key) {
-        return this.acquireLock(key, 60L);
-    }
-
-    /**
-     * 获取分布式锁
-     *
-     * @param key
-     * @return
-     */
-    public boolean acquireLock(String key, Long expireTimeSeconds) {
-        String lock = LOCK_PREFIX + key;
-        return (Boolean) redisTemplate.execute((RedisCallback) connection -> {
-
-            Boolean acquire = connection.setNX(lock.getBytes(), "TRUE".getBytes());
-
-            if (acquire) {
-                connection.expire(lock.getBytes(), expireTimeSeconds);
-                return true;
-            }
-            return false;
-        });
-    }
-
-    /**
-     * 解锁
-     *
-     * @param key
-     */
-    public void unLock(String key) {
-        String lock = LOCK_PREFIX + key;
-        redisTemplate.delete(lock);
-    }
 }

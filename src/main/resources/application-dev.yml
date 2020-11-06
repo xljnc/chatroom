@@ -65,5 +65,3 @@ spring:
     port: 6369
     password: Iindeed1008
     database: 11
-    custom:
-      expireTime: 3600
