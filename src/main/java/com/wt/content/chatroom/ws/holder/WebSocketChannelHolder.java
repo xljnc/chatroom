@@ -24,8 +24,6 @@ public class WebSocketChannelHolder {
     @Autowired
     private ChatroomConfig chatroomConfig;
 
-    private Map<String, ChannelHandlerContext> handlerContextMap = new ConcurrentHashMap<>();
-
     private Map<String, Channel> userChannelMap = new ConcurrentHashMap<>();
 
     private Map<Channel, String> channelUserMap = new ConcurrentHashMap<>();
@@ -34,12 +32,17 @@ public class WebSocketChannelHolder {
 
     private Object HOST_USERS_REDIS_KEY_LOCK = new Object();
 
-    public ChannelHandlerContext putChannelHandlerContext(String userId, ChannelHandlerContext ctx) {
-        return handlerContextMap.put(userId, ctx);
+
+    public void bindUserChannel(String userId, Channel channel) {
+        bindUserToChannel(userId, channel);
+        bindChannelToUser(channel, userId);
+        addUserOnThisHost(userId);
     }
 
-    public ChannelHandlerContext getChannelHandlerContext(String userId) {
-        return handlerContextMap.get(userId);
+    public void unbindUserChannel(String userId, Channel channel) {
+        unbindUserToChannel(userId);
+        unbindChannelToUser(channel);
+        addUserOnThisHost(userId);
     }
 
     public Channel bindUserToChannel(String userId, Channel channel) {

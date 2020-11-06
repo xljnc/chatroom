@@ -2,6 +2,7 @@ package com.wt.content.chatroom.ws.server;
 
 import com.wt.content.chatroom.ws.config.WebsocketConfigProperty;
 import com.wt.content.chatroom.ws.handler.WebsocketMessageHandler;
+import com.wt.content.chatroom.ws.handler.WebsocketUserHandler;
 import com.wt.content.chatroom.ws.holder.WebSocketChannelHolder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
@@ -48,6 +49,9 @@ public class WebsocketServer implements ApplicationRunner, ApplicationListener<C
 
     @Autowired
     private WebsocketMessageHandler websocketMessageHandler;
+
+    @Autowired
+    private WebsocketUserHandler websocketUserHandler;
 
     @Autowired
     private WebSocketChannelHolder webSocketChannelHolder;
@@ -98,6 +102,7 @@ public class WebsocketServer implements ApplicationRunner, ApplicationListener<C
                 pipeline.addLast(new IdleStateHandler(websocketConfigProperty.getReaderIdleTimeSeconds(), websocketConfigProperty.getWriterIdleTimeSeconds(), websocketConfigProperty.getAllIdleTimeSeconds()));
                 pipeline.addLast(new WebSocketServerCompressionHandler());
                 pipeline.addLast(new WebSocketServerProtocolHandler(websocketConfigProperty.getPath(), null, true, websocketConfigProperty.getMaxFrameSize()));
+                pipeline.addLast(websocketUserHandler);
                 pipeline.addLast(websocketMessageHandler);
             }
         });
