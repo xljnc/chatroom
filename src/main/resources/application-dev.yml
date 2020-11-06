@@ -61,7 +61,7 @@ spring:
           content-type: application/json
 
   redis:
-    host: 192.168.1.253
-    port: 6369
-    password: Iindeed1008
+    host: 47.97.186.99
+    port: 6380
+    password: Test123456
     database: 11

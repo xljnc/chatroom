@@ -28,9 +28,6 @@ public class WebsocketMessageHandler extends SimpleChannelInboundHandler<TextWeb
     private JacksonUtil jacksonUtil;
 
     @Autowired
-    private ChatroomConfig chatroomConfig;
-
-    @Autowired
     private WebSocketChannelHolder webSocketChannelHolder;
 
     @Override
@@ -43,7 +40,10 @@ public class WebsocketMessageHandler extends SimpleChannelInboundHandler<TextWeb
                     .addListener(ChannelFutureListener.CLOSE);
             return;
         }
-        webSocketChannelHolder.putChannel(input.getUserId(), ctx.channel());
+        //维护用户列表
+        webSocketChannelHolder.bindUserToChannel(input.getUserId(), ctx.channel());
+        webSocketChannelHolder.bindChannelToUser(ctx.channel(), input.getUserId());
+        webSocketChannelHolder.addUserOnThisHost(input.getUserId());
     }
 
     @Override
@@ -55,6 +55,11 @@ public class WebsocketMessageHandler extends SimpleChannelInboundHandler<TextWeb
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         super.channelInactive(ctx);
+        String userId = webSocketChannelHolder.getUserByChannel(ctx.channel());
+        //解除用户通道绑定
+        webSocketChannelHolder.unbindUserToChannel(userId);
+        webSocketChannelHolder.unbindChannelToUser(ctx.channel());
+        webSocketChannelHolder.removeUserOnThisHost(userId);
         log.info("链接断开：{}", ctx.channel().remoteAddress());
     }
 

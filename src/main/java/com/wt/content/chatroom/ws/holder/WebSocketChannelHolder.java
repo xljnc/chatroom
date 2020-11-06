@@ -26,7 +26,9 @@ public class WebSocketChannelHolder {
 
     private Map<String, ChannelHandlerContext> handlerContextMap = new ConcurrentHashMap<>();
 
-    private Map<String, Channel> channelMap = new ConcurrentHashMap<>();
+    private Map<String, Channel> userChannelMap = new ConcurrentHashMap<>();
+
+    private Map<Channel, String> channelUserMap = new ConcurrentHashMap<>();
 
     private volatile String HOST_USERS_REDIS_KEY;
 
@@ -40,12 +42,28 @@ public class WebSocketChannelHolder {
         return handlerContextMap.get(userId);
     }
 
-    public Channel putChannel(String userId, Channel channel) {
-        return channelMap.put(userId, channel);
+    public Channel bindUserToChannel(String userId, Channel channel) {
+        return userChannelMap.put(userId, channel);
     }
 
-    public Channel getChannel(String userId) {
-        return channelMap.get(userId);
+    public Channel getChannelByUser(String userId) {
+        return userChannelMap.get(userId);
+    }
+
+    public Channel unbindUserToChannel(String userId) {
+        return userChannelMap.remove(userId);
+    }
+
+    public String bindChannelToUser(Channel channel, String userId) {
+        return channelUserMap.put(channel, userId);
+    }
+
+    public String getUserByChannel(Channel channel) {
+        return channelUserMap.get(channel);
+    }
+
+    public String unbindChannelToUser(Channel channel) {
+        return channelUserMap.remove(channel);
     }
 
     public void clearUserOnThisHost() {
@@ -68,7 +86,7 @@ public class WebSocketChannelHolder {
         redisUtil.containSetValue(HOST_USERS_REDIS_KEY, userId);
     }
 
-    private void generateHostUserRedisKey(){
+    private void generateHostUserRedisKey() {
         if (!StringUtils.hasText(HOST_USERS_REDIS_KEY)) {
             synchronized (HOST_USERS_REDIS_KEY_LOCK) {
                 if (!StringUtils.hasText(HOST_USERS_REDIS_KEY)) {
