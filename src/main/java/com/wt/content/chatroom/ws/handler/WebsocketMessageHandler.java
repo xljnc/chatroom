@@ -1,15 +1,8 @@
 package com.wt.content.chatroom.ws.handler;
 
-import com.wt.content.chatroom.util.JacksonUtil;
-import com.wt.content.chatroom.ws.holder.WebSocketChannelHolder;
 import com.wt.content.chatroom.ws.protocol.WebsocketInboundMessage;
 import io.netty.channel.*;
-import io.netty.handler.codec.http.DefaultFullHttpResponse;
-import io.netty.handler.codec.http.HttpResponseStatus;
-import io.netty.handler.codec.http.HttpVersion;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.SocketAddress;
