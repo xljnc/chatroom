@@ -30,6 +30,9 @@ public class WebsocketMessageHandler extends SimpleChannelInboundHandler<TextWeb
     @Autowired
     private ChatroomConfig chatroomConfig;
 
+    @Autowired
+    private WebSocketChannelHolder webSocketChannelHolder;
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
         String text = msg.text();
@@ -40,8 +43,7 @@ public class WebsocketMessageHandler extends SimpleChannelInboundHandler<TextWeb
                     .addListener(ChannelFutureListener.CLOSE);
             return;
         }
-        WebSocketChannelHolder.putChannel(input.getUserId(), ctx.channel());
-
+        webSocketChannelHolder.putChannel(input.getUserId(), ctx.channel());
     }
 
     @Override

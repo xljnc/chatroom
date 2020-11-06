@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +20,6 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 @Setter
-@ConditionalOnMissingBean(RedisUtil.class)
 public class RedisUtil {
 
     @Autowired
@@ -27,6 +27,9 @@ public class RedisUtil {
 
     @Autowired
     private ValueOperations<String, Object> valueOperations;
+
+    @Autowired
+    private SetOperations<String, Object> setOperations;
 
 
     /**
@@ -128,6 +131,38 @@ public class RedisUtil {
     public Object getObjectValue(String key) {
         return valueOperations.get(key);
     }
+
+    /**
+     * 存储Set对象
+     *
+     * @param key
+     * @param value
+     */
+    public void addSetValue(String key, Object... value) {
+        setOperations.add(key, value);
+    }
+
+    /**
+     * 获取Set对象
+     **/
+    public Set<Object> getSetValue(String key) {
+        return setOperations.members(key);
+    }
+
+    /**
+     * 判断Set是否包含对象
+     **/
+    public Boolean containSetValue(String key, Object value) {
+        return setOperations.isMember(key, value);
+    }
+
+    /**
+     * 从Set移除对象
+     **/
+    public Long removeSetValue(String key, Object... value) {
+        return setOperations.remove(key, value);
+    }
+
 
     /**
      * 发布订阅消息

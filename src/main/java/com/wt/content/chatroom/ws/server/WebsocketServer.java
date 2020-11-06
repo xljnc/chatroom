@@ -2,6 +2,7 @@ package com.wt.content.chatroom.ws.server;
 
 import com.wt.content.chatroom.ws.config.WebsocketConfigProperty;
 import com.wt.content.chatroom.ws.handler.WebsocketMessageHandler;
+import com.wt.content.chatroom.ws.holder.WebSocketChannelHolder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -48,6 +49,9 @@ public class WebsocketServer implements ApplicationRunner, ApplicationListener<C
     @Autowired
     private WebsocketMessageHandler websocketMessageHandler;
 
+    @Autowired
+    private WebSocketChannelHolder webSocketChannelHolder;
+
 
     /**
      * 启动 Netty Server
@@ -62,6 +66,8 @@ public class WebsocketServer implements ApplicationRunner, ApplicationListener<C
             Channel channel = serverBootstrap.bind().sync().channel();
             this.serverChannel = channel;
             log.info("Netty Server 启动成功,port={}", websocketConfigProperty.getPort());
+            //移除Server上的User
+            webSocketChannelHolder.clearUserOnThisHost();
             channel.closeFuture().sync();
         } finally {
             bossGroup.shutdownGracefully();
@@ -109,6 +115,8 @@ public class WebsocketServer implements ApplicationRunner, ApplicationListener<C
         if (this.serverChannel != null) {
             this.serverChannel.close();
         }
+        //移除Server上的
+        webSocketChannelHolder.clearUserOnThisHost();
         log.info("Netty Server停止完成.");
     }
 }
