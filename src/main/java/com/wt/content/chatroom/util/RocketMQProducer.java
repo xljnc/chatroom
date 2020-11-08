@@ -10,6 +10,8 @@ import org.apache.rocketmq.common.message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+
 @Component
 @Slf4j
 public class RocketMQProducer {
@@ -25,12 +27,14 @@ public class RocketMQProducer {
     @Autowired
     private JacksonUtil jacksonUtil;
 
-    public RocketMQProducer() {
+    @PostConstruct
+    public void init() {
         mqProducer = new DefaultMQProducer(rocketMQConfig.getProducerGroup());
         mqProducer.setNamesrvAddr(rocketMQConfig.getNamesrvAddr());
         mqProducer.setRetryTimesWhenSendFailed(rocketMQConfig.getRetryTimesWhenSendFailed());
         try {
             mqProducer.start();
+            log.info("MQ生产者启动成功");
         } catch (MQClientException e) {
             log.error("MQ生产者启动失败", e);
         }
