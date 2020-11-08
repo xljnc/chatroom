@@ -1,8 +1,11 @@
 package com.wt.content.chatroom.ws.handler;
 
+import com.wt.content.chatroom.util.JacksonUtil;
 import com.wt.content.chatroom.util.RocketMQProducer;
 import com.wt.content.chatroom.ws.protocol.WebsocketInboundMessage;
+import com.wt.content.chatroom.ws.protocol.WebsocketOutboundMessage;
 import io.netty.channel.*;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,6 +24,9 @@ public class WebsocketMessageHandler extends SimpleChannelInboundHandler<Websock
     @Autowired
     private RocketMQProducer mqProducer;
 
+    @Autowired
+    private JacksonUtil jacksonUtil;
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, WebsocketInboundMessage msg) throws Exception {
         log.info("收到消息:{}", msg);
@@ -30,7 +36,12 @@ public class WebsocketMessageHandler extends SimpleChannelInboundHandler<Websock
 
     @Override
     public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
-        ctx.writeAndFlush(msg, promise);
+        if (!(msg instanceof WebsocketOutboundMessage))
+            ctx.writeAndFlush(msg);
+        else {
+            TextWebSocketFrame wsFrame = new TextWebSocketFrame(jacksonUtil.writeValueAsString(msg));
+            ctx.writeAndFlush(wsFrame, promise);
+        }
         log.info("发送消息:{}" + msg);
     }
 
