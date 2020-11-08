@@ -21,8 +21,9 @@ spring:
     database: 11
 
   rocketmq:
-    namesrvAddr:
-    producerGroup:
+    namesrvAddr: 127.0.0.1:30876
+    producerGroup: websocket-producer-group-dev
+    consumerGroup: websocket-consumer-group-dev
     retryTimesWhenSendFailed: 2
     producerTopic: websocket-inbound-topic-dev
     consumerTopic: websocket-outbound-topic-dev

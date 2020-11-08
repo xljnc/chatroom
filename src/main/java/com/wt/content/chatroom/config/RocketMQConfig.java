@@ -1,4 +1,4 @@
-package com.wt.content.chatroom.core;
+package com.wt.content.chatroom.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -17,6 +17,8 @@ public class RocketMQConfig {
     private String namesrvAddr;
 
     private String producerGroup;
+
+    private String consumerGroup;
 
     private int retryTimesWhenSendFailed;
 

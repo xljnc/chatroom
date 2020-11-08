@@ -1,6 +1,6 @@
 package com.wt.content.chatroom.util;
 
-import com.wt.content.chatroom.core.RocketMQConfig;
+import com.wt.content.chatroom.config.RocketMQConfig;
 import com.wt.content.chatroom.ws.protocol.WebsocketInboundMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.exception.MQClientException;
