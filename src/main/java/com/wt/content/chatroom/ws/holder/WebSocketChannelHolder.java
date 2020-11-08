@@ -35,13 +35,13 @@ public class WebSocketChannelHolder {
     public void bindUserChannel(String userId, Channel channel) {
         bindUserToChannel(userId, channel);
         bindChannelToUser(channel, userId);
-        addUserOnThisHost(userId);
+//        addUserOnThisHost(userId);
     }
 
     public void unbindUserChannel(String userId, Channel channel) {
         unbindUserToChannel(userId);
         unbindChannelToUser(channel);
-        addUserOnThisHost(userId);
+//        removeUserOnThisHost(userId);
     }
 
     public Channel bindUserToChannel(String userId, Channel channel) {

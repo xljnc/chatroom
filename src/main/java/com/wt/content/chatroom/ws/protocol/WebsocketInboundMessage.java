@@ -20,7 +20,11 @@ public class WebsocketInboundMessage implements Serializable {
 
     private String topic;
 
+    private Boolean groupChat;
+
     private String userId;
+
+    private String roomId;
 
     private Object body;
 

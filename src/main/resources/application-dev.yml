@@ -14,48 +14,15 @@ websocket:
     allIdleTimeSeconds: 0
 
 spring:
-  cloud:
-    ##RocketMQ配置
-    stream:
-      rocketmq:
-        bindings:
-          onWebsocketMessageOutput:
-            producer:
-              group: on-websocket-message-output-group
-              sync: true
-          sendWebsocketMessageInput:
-            consumer:
-              orderly: true
-              tags: send-
-        binder:
-          name-server: 192.168.1.241:9876
-      bindings:
-        updateEnterpriseInput:
-          destination: talent-enterprise-topic-dev
-          group: update-enterprise-input-group-dev
-          content-type: application/json
-          consumer:
-            concurrency: 5
-        updateTalentEnterpriseInput:
-          destination: talent-enterprise-topic-dev
-          content-type: application/json
-          group: update-talent-enterprise-input-group-dev
-          consumer:
-            concurrency: 5
-        enterpriseStatisticInput:
-          destination: talent-enterprise-topic-dev
-          content-type: application/json
-          group: enterprise-statistic-input-group-dev
-          consumer:
-            concurrency: 5
-        onWebsocketMessageOutput:
-          destination: on-websocket-message-topic-dev
-          content-type: application/json
-          producer:
-            partition-key-expression: payload['id']
-
   redis:
-    host: 47.97.186.99
-    port: 6380
-    password: Test123456
+    host: 127.0.0.1
+    port: 32379
+    password:
     database: 11
+
+  rocketmq:
+    namesrvAddr:
+    producerGroup:
+    retryTimesWhenSendFailed: 2
+    producerTopic: websocket-inbound-topic-dev
+    consumerTopic: websocket-outbound-topic-dev
