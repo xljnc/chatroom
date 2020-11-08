@@ -25,4 +25,6 @@ public class RocketMQConfig {
     private String producerTopic;
 
     private String consumerTopic;
+
+    private int consumeMessageBatchMaxSize;
 }

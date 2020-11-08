@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author 一贫
@@ -16,19 +17,19 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class WebsocketInboundMessage implements Serializable {
+public class WebsocketOutboundMessage implements Serializable {
 
     private String topic;
 
     private Boolean groupChat;
 
-    private String userId;
+    private List<String> userIds;
 
     private String roomId;
 
     private Object body;
 
     public boolean validate() {
-        return StringUtils.hasText(topic) && groupChat != null && StringUtils.hasText(userId);
+        return StringUtils.hasText(topic) && groupChat != null && !userIds.isEmpty();
     }
 }

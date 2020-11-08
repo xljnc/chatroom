@@ -1,8 +1,10 @@
 package com.wt.content.chatroom.ws.handler;
 
+import com.wt.content.chatroom.util.RocketMQProducer;
 import com.wt.content.chatroom.ws.protocol.WebsocketInboundMessage;
 import io.netty.channel.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.SocketAddress;
@@ -16,10 +18,13 @@ import java.net.SocketAddress;
 @Slf4j
 public class WebsocketMessageHandler extends SimpleChannelInboundHandler<WebsocketInboundMessage> implements ChannelOutboundHandler {
 
+    @Autowired
+    private RocketMQProducer mqProducer;
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, WebsocketInboundMessage msg) throws Exception {
         log.info("收到消息:{}", msg);
+        mqProducer.sendOrderedMessage(msg);
         ctx.fireChannelRead(msg);
     }
 

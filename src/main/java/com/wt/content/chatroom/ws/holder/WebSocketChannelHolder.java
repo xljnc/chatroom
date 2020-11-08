@@ -1,11 +1,9 @@
 package com.wt.content.chatroom.ws.holder;
 
-import com.wt.content.chatroom.config.ChatroomConfig;
 import com.wt.content.chatroom.util.RedisUtil;
 import io.netty.channel.Channel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,8 +18,8 @@ public class WebSocketChannelHolder {
     @Autowired
     private RedisUtil redisUtil;
 
-    @Autowired
-    private ChatroomConfig chatroomConfig;
+//    @Autowired
+//    private ChatroomConfig chatroomConfig;
 
     private Map<String, Channel> userChannelMap = new ConcurrentHashMap<>();
 
@@ -68,35 +66,35 @@ public class WebSocketChannelHolder {
         return channelUserMap.remove(channel);
     }
 
-    public void clearUserOnThisHost() {
-        generateHostUserRedisKey();
-        redisUtil.deleteKey(HOST_USERS_REDIS_KEY);
-    }
+//    public void clearUserOnThisHost() {
+//        generateHostUserRedisKey();
+//        redisUtil.deleteKey(HOST_USERS_REDIS_KEY);
+//    }
+//
+//    public void addUserOnThisHost(String userId) {
+//        generateHostUserRedisKey();
+//        redisUtil.addSetValue(HOST_USERS_REDIS_KEY, userId);
+//    }
+//
+//    public void removeUserOnThisHost(String userId) {
+//        generateHostUserRedisKey();
+//        redisUtil.removeSetValue(HOST_USERS_REDIS_KEY, userId);
+//    }
+//
+//    public void containsUserOnThisHost(String userId) {
+//        generateHostUserRedisKey();
+//        redisUtil.containSetValue(HOST_USERS_REDIS_KEY, userId);
+//    }
 
-    public void addUserOnThisHost(String userId) {
-        generateHostUserRedisKey();
-        redisUtil.addSetValue(HOST_USERS_REDIS_KEY, userId);
-    }
-
-    public void removeUserOnThisHost(String userId) {
-        generateHostUserRedisKey();
-        redisUtil.removeSetValue(HOST_USERS_REDIS_KEY, userId);
-    }
-
-    public void containsUserOnThisHost(String userId) {
-        generateHostUserRedisKey();
-        redisUtil.containSetValue(HOST_USERS_REDIS_KEY, userId);
-    }
-
-    private void generateHostUserRedisKey() {
-        if (!StringUtils.hasText(HOST_USERS_REDIS_KEY)) {
-            synchronized (HOST_USERS_REDIS_KEY_LOCK) {
-                if (!StringUtils.hasText(HOST_USERS_REDIS_KEY)) {
-                    String hostname = chatroomConfig.getHostname();
-                    HOST_USERS_REDIS_KEY = String.format("host::user::%s", hostname);
-                }
-            }
-        }
-    }
+//    private void generateHostUserRedisKey() {
+//        if (!StringUtils.hasText(HOST_USERS_REDIS_KEY)) {
+//            synchronized (HOST_USERS_REDIS_KEY_LOCK) {
+//                if (!StringUtils.hasText(HOST_USERS_REDIS_KEY)) {
+//                    String hostname = chatroomConfig.getHostname();
+//                    HOST_USERS_REDIS_KEY = String.format("host::user::%s", hostname);
+//                }
+//            }
+//        }
+//    }
 
 }

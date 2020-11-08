@@ -9,7 +9,7 @@ websocket:
     port: 1024
     path: /ws
     maxFrameSize: 65536
-    readerIdleTimeSeconds: 3
+    readerIdleTimeSeconds: 300
     writerIdleTimeSeconds: 0
     allIdleTimeSeconds: 0
 
@@ -21,9 +21,10 @@ spring:
     database: 11
 
   rocketmq:
-    namesrvAddr: 127.0.0.1:30876
+    namesrvAddr: 192.168.1.8:30876
     producerGroup: websocket-producer-group-dev
     consumerGroup: websocket-consumer-group-dev
     retryTimesWhenSendFailed: 2
     producerTopic: websocket-inbound-topic-dev
     consumerTopic: websocket-outbound-topic-dev
+    consumeMessageBatchMaxSize: 10

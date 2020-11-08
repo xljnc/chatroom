@@ -8,13 +8,15 @@ import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.client.producer.MessageQueueSelector;
 import org.apache.rocketmq.common.message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
 
 @Component
 @Slf4j
-public class RocketMQProducer {
+@Order(2)
+public class RocketMQProducer implements ApplicationRunner {
 
     @Autowired
     private RocketMQConfig rocketMQConfig;
@@ -27,19 +29,6 @@ public class RocketMQProducer {
     @Autowired
     private JacksonUtil jacksonUtil;
 
-    @PostConstruct
-    public void init() {
-        mqProducer = new DefaultMQProducer(rocketMQConfig.getProducerGroup());
-        mqProducer.setNamesrvAddr(rocketMQConfig.getNamesrvAddr());
-        mqProducer.setRetryTimesWhenSendFailed(rocketMQConfig.getRetryTimesWhenSendFailed());
-        try {
-            mqProducer.start();
-            log.info("MQ生产者启动成功");
-        } catch (MQClientException e) {
-            log.error("MQ生产者启动失败", e);
-        }
-    }
-
     public <T extends WebsocketInboundMessage> boolean sendOrderedMessage(T message) {
         Message msg = new Message(rocketMQConfig.getProducerTopic(), jacksonUtil.writeValueAsBytes(message));
         try {
@@ -48,6 +37,19 @@ public class RocketMQProducer {
         } catch (Exception e) {
             log.error("消息发送失败，内容:{}", jacksonUtil.writeValueAsString(message), e);
             return false;
+        }
+    }
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        mqProducer = new DefaultMQProducer(rocketMQConfig.getProducerGroup());
+        mqProducer.setNamesrvAddr(rocketMQConfig.getNamesrvAddr());
+        mqProducer.setRetryTimesWhenSendFailed(rocketMQConfig.getRetryTimesWhenSendFailed());
+        try {
+            mqProducer.start();
+            log.info("MQ生产者启动成功");
+        } catch (MQClientException e) {
+            log.error("MQ生产者启动失败", e);
         }
     }
 }

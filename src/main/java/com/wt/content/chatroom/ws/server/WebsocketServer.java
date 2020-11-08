@@ -3,13 +3,16 @@ package com.wt.content.chatroom.ws.server;
 import com.wt.content.chatroom.ws.config.WebsocketConfigProperty;
 import com.wt.content.chatroom.ws.handler.WebsocketMessageHandler;
 import com.wt.content.chatroom.ws.handler.WebsocketUserHandler;
-import com.wt.content.chatroom.ws.holder.WebSocketChannelHolder;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.*;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.http.*;
+import io.netty.handler.codec.http.HttpObjectAggregator;
+import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
@@ -33,7 +36,7 @@ import java.net.InetSocketAddress;
  */
 @Component
 @Slf4j
-@Order(1)
+@Order(3)
 public class WebsocketServer implements ApplicationRunner, ApplicationListener<ContextClosedEvent> {
 
     private ServerBootstrap serverBootstrap;
@@ -53,10 +56,6 @@ public class WebsocketServer implements ApplicationRunner, ApplicationListener<C
     @Autowired
     private WebsocketUserHandler websocketUserHandler;
 
-    @Autowired
-    private WebSocketChannelHolder webSocketChannelHolder;
-
-
     /**
      * 启动 Netty Server
      *
@@ -70,8 +69,6 @@ public class WebsocketServer implements ApplicationRunner, ApplicationListener<C
             Channel channel = serverBootstrap.bind().sync().channel();
             this.serverChannel = channel;
             log.info("Netty Server 启动成功,port={}", websocketConfigProperty.getPort());
-            //移除Server上的User
-            webSocketChannelHolder.clearUserOnThisHost();
             channel.closeFuture().sync();
         } finally {
             bossGroup.shutdownGracefully();
@@ -120,8 +117,6 @@ public class WebsocketServer implements ApplicationRunner, ApplicationListener<C
         if (this.serverChannel != null) {
             this.serverChannel.close();
         }
-        //移除Server上的
-        webSocketChannelHolder.clearUserOnThisHost();
         log.info("Netty Server停止完成.");
     }
 }
