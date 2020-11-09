@@ -11,3 +11,8 @@ Netty模型中，入站是从头到尾调用入站处理器，出站则是从尾
 处理顺序是WebsocketUserHandler.channelRead0 ->WebsocketMessageHandler.channelRead0
 server往client发送消息时
 处理顺序是WebsocketMessageHandler.write
+
+2.为了完成用户ID和Netty Channel的绑定
+client和server完成websocket连接建立，应该立即发送一个主题为user-connect的空消息
+WebsocketMessageHandler会完成绑定动作并丢弃此消息，不会发送MQ消息给业务方
+client和server同时应该完善心跳机制
