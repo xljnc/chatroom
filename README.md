@@ -16,3 +16,10 @@ server往client发送消息时
 client和server完成websocket连接建立，应该立即发送一个主题为user-connect的空消息
 WebsocketMessageHandler会完成绑定动作并丢弃此消息，不会发送MQ消息给业务方
 client和server同时应该完善心跳机制
+
+3.总体流程
+1.client和server完成websocket连接建立
+2.client发送一个主题为user-connect的空消息,完成用户ID和Netty Channel的绑定
+3.client往server发送聊天消息，经过Netty ChannelHandler处理后，发送MQ顺序消息给业务系统处理
+4.业务系统处理完成后，发送MQ广播消息给Netty Server
+5.Netty Server获取到需要发送消息的用户对应的Netty Channel，封装TextWebSocketFrame，调用channel.writeAndFlush发送给client
