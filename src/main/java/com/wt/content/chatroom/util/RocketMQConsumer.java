@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 /**
  * MQ消费者
  *
- * @author 朱群
+ * @author ZQ
  * @date 2020/11/6
  */
 @Component

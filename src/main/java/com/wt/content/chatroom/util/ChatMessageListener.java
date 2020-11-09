@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * 消息处理服务
  *
- * @author 朱群
+ * @author ZQ
  * @date 2020/11/6
  */
 @Component

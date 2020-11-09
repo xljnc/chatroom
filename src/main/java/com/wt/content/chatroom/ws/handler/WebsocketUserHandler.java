@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
  * 用户校验handler
  * 将收到的WebSocketFrame转换成WebsocketInboundMessage
  *
- * @author 朱群
+ * @author ZQ
  * @date 2020/11/5
  */
 @ChannelHandler.Sharable

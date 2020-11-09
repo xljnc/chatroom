@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 管理用户ID和Netty Channel
  *
- * @author 朱群
+ * @author ZQ
  * @date 2020/11/5
  */
 @Component

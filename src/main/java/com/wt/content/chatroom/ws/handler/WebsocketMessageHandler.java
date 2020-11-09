@@ -15,7 +15,7 @@ import java.net.SocketAddress;
 /**
  * 用户消息处理handler
  *
- * @author 朱群
+ * @author ZQ
  * @date 2020/11/5
  */
 @ChannelHandler.Sharable

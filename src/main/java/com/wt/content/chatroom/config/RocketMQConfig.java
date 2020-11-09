@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * @auther: 朱群
+ * @auther: ZQ
  * @date: 2019/9/10 21:03
  * @description: MQ配置类
  */

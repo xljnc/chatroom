@@ -9,7 +9,7 @@ websocket:
     port: 1024
     path: /ws
     maxFrameSize: 65536
-    readerIdleTimeSeconds: 300
+    readerIdleTimeSeconds: 3
     writerIdleTimeSeconds: 0
     allIdleTimeSeconds: 0
 

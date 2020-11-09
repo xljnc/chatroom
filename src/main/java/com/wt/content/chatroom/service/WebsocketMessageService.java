@@ -5,7 +5,7 @@ import com.wt.content.chatroom.ws.protocol.WebsocketInboundMessage;
 /**
  * 消息处理服务
  *
- * @author 朱群
+ * @author ZQ
  * @date 2020/11/6
  */
 public interface WebsocketMessageService {
@@ -15,7 +15,7 @@ public interface WebsocketMessageService {
      *
      * @param message
      * @return void
-     * @author 朱群
+     * @author ZQ
      * @date 2020/11/6 19:26
      */
     void handleMessage(WebsocketInboundMessage message);

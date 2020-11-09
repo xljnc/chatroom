@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * Websocket入站消息
  *
- * @author 朱群
+ * @author ZQ
  * @date 2020/11/5
  */
 @Data

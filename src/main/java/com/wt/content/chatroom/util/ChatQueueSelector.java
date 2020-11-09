@@ -17,7 +17,7 @@ import java.util.List;
  * 2. 如果是私聊，则按userId的hashcode进行路由，保证同一个用户的消息发送到同一个queue
  * 3. 消费方需要使用MessageListenerOrderly来保证顺序消费
  *
- * @author 朱群
+ * @author ZQ
  * @date 2020/11/6
  */
 @Component
