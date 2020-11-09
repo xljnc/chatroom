@@ -81,7 +81,7 @@ public class WebsocketServer implements ApplicationRunner, ApplicationListener<C
      * 主要关注 serverBootstrap.childHandler
      * pipeline.addLast(websocketUserHandler);
      * pipeline.addLast(websocketMessageHandler);
-     * websocketUserHandler用于用户校验，并将受到的WebSocketFrame转换成WebsocketInboundMessage
+     * websocketUserHandler用于用户校验，并将收到的WebSocketFrame转换成WebsocketInboundMessage
      * websocketMessageHandler用户消息处理
      * 根据实际情况对这2个handler进行扩展
      * 也可以添加新的handler,Netty的handler是链式处理，由ChannelPipeline的上一个handler传递给下一个handler

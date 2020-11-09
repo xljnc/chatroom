@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 import java.net.SocketAddress;
 
 /**
+ * 用户消息处理handler
+ *
  * @author 朱群
  * @date 2020/11/5
  */
@@ -27,6 +29,9 @@ public class WebsocketMessageHandler extends SimpleChannelInboundHandler<Websock
     @Autowired
     private JacksonUtil jacksonUtil;
 
+    /**
+     * 入站消息处理
+     */
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, WebsocketInboundMessage msg) throws Exception {
         log.info("收到消息:{}", msg);
@@ -34,6 +39,9 @@ public class WebsocketMessageHandler extends SimpleChannelInboundHandler<Websock
         ctx.fireChannelRead(msg);
     }
 
+    /**
+     * 出站消息处理
+     */
     @Override
     public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
         if (!(msg instanceof WebsocketOutboundMessage))

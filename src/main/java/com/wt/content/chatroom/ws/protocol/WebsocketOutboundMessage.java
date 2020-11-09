@@ -10,6 +10,8 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * Websocket出站消息
+ *
  * @author 朱群
  * @date 2020/11/5
  */

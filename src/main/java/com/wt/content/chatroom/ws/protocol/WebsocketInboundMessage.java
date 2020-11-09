@@ -9,6 +9,8 @@ import org.springframework.util.StringUtils;
 import java.io.Serializable;
 
 /**
+ * Websocket入站消息
+ *
  * @author 朱群
  * @date 2020/11/5
  */

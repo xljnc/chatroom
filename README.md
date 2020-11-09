@@ -1,2 +1,13 @@
 
 1.使用Netty完成Websocket消息的接收和发送
+在WebsocketServer中完成Netty Server的初始化和启动
+WebsocketServer.init方法中childHandler，initChannel方法中
+可以对消息处理handler进行扩展
+现在实现了2个handler，WebsocketUserHandler和WebsocketMessageHandler
+WebsocketUserHandler是入站处理器
+WebsocketMessageHandler既是入站处理器又是出站处理器
+Netty模型中，入站是从头到尾调用入站处理器，出站则是从尾到头调用出站处理器
+因此当client往server发送消息时
+处理顺序是WebsocketUserHandler.channelRead0 ->WebsocketMessageHandler.channelRead0
+server往client发送消息时
+处理顺序是WebsocketMessageHandler.write
