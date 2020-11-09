@@ -1,5 +1,6 @@
 package com.wt.content.chatroom.ws.handler;
 
+import com.wt.content.chatroom.service.WebsocketMessageService;
 import com.wt.content.chatroom.util.JacksonUtil;
 import com.wt.content.chatroom.util.RocketMQProducer;
 import com.wt.content.chatroom.ws.protocol.WebsocketInboundMessage;
@@ -22,7 +23,7 @@ import java.net.SocketAddress;
 public class WebsocketMessageHandler extends SimpleChannelInboundHandler<WebsocketInboundMessage> implements ChannelOutboundHandler {
 
     @Autowired
-    private RocketMQProducer mqProducer;
+    private WebsocketMessageService websocketMessageService;
 
     @Autowired
     private JacksonUtil jacksonUtil;
@@ -30,7 +31,7 @@ public class WebsocketMessageHandler extends SimpleChannelInboundHandler<Websock
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, WebsocketInboundMessage msg) throws Exception {
         log.info("收到消息:{}", msg);
-        mqProducer.sendOrderedMessage(msg);
+        websocketMessageService.handleMessage(msg);
         ctx.fireChannelRead(msg);
     }
 
