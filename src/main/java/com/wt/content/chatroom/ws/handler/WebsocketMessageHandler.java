@@ -2,7 +2,6 @@ package com.wt.content.chatroom.ws.handler;
 
 import com.wt.content.chatroom.service.WebsocketMessageService;
 import com.wt.content.chatroom.util.JacksonUtil;
-import com.wt.content.chatroom.util.RocketMQProducer;
 import com.wt.content.chatroom.ws.protocol.WebsocketInboundMessage;
 import com.wt.content.chatroom.ws.protocol.WebsocketOutboundMessage;
 import io.netty.channel.*;
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Component;
 import java.net.SocketAddress;
 
 /**
- * @author 一贫
+ * @author 朱群
  * @date 2020/11/5
  */
 @ChannelHandler.Sharable

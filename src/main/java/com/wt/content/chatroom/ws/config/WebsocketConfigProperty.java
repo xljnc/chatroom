@@ -5,7 +5,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * @author 一贫
+ * Websocket配置类
+ *
+ * @author 朱群
  * @date 2020/11/5
  */
 @ConfigurationProperties(prefix = "websocket.netty")
@@ -35,11 +37,11 @@ public class WebsocketConfigProperty {
     /**
      * writerIdleTime写空闲超时时间设定，如果write()方法超过writerIdleTime时间未被调用则会触发超时事件调用userEventTrigger()方法；
      */
-    private  int writerIdleTimeSeconds;
+    private int writerIdleTimeSeconds;
 
     /**
      * allIdleTime所有类型的空闲超时时间设定，包括读空闲和写空闲；
      */
-    private  int allIdleTimeSeconds;
+    private int allIdleTimeSeconds;
 
 }

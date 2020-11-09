@@ -12,6 +12,12 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+/**
+ * MQ消费者
+ *
+ * @author 朱群
+ * @date 2020/11/6
+ */
 @Component
 @Slf4j
 @Order(1)

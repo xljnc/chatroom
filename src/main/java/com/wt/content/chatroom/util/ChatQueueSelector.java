@@ -5,17 +5,24 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.MessageQueueSelector;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.common.message.MessageQueue;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * MQ消息路由选择器
+ * 控制消息发送到topic下的某个queue,保证消息局部有序
+ * 规则：
+ * 1. 如果是群聊，则按roomId的hashcode进行路由，保证同一个群聊的消息发送到同一个queue
+ * 2. 如果是私聊，则按userId的hashcode进行路由，保证同一个用户的消息发送到同一个queue
+ * 3. 消费方需要使用MessageListenerOrderly来保证顺序消费
+ *
+ * @author 朱群
+ * @date 2020/11/6
+ */
 @Component
 @Slf4j
 public class ChatQueueSelector implements MessageQueueSelector {
-
-    @Autowired
-    private JacksonUtil jacksonUtil;
 
     @Override
     public MessageQueue select(List<MessageQueue> mqs, Message msg, Object arg) {

@@ -9,7 +9,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @author 一贫
+ * 管理用户ID和Netty Channel
+ *
+ * @author 朱群
  * @date 2020/11/5
  */
 @Component
@@ -21,21 +23,42 @@ public class WebSocketChannelHolder {
 //    @Autowired
 //    private ChatroomConfig chatroomConfig;
 
+    /**
+     * key: 用户ID
+     * value: netty channel
+     */
     private Map<String, Channel> userChannelMap = new ConcurrentHashMap<>();
 
+    /**
+     * key: netty channel
+     * value: 用户ID
+     */
     private Map<Channel, String> channelUserMap = new ConcurrentHashMap<>();
 
-    private volatile String HOST_USERS_REDIS_KEY;
+//    private volatile String HOST_USERS_REDIS_KEY;
+//
+//    private Object HOST_USERS_REDIS_KEY_LOCK = new Object();
 
-    private Object HOST_USERS_REDIS_KEY_LOCK = new Object();
-
-
+    /**
+     * 绑定用户ID和Netty Channel
+     *
+     * @param userId  用户ID
+     * @param channel netty channel
+     * @return void
+     */
     public void bindUserChannel(String userId, Channel channel) {
         bindUserToChannel(userId, channel);
         bindChannelToUser(channel, userId);
 //        addUserOnThisHost(userId);
     }
 
+    /**
+     * 清理用户ID和Netty Channel绑定
+     *
+     * @param userId  用户ID
+     * @param channel netty channel
+     * @return void
+     */
     public void unbindUserChannel(String userId, Channel channel) {
         unbindUserToChannel(userId);
         unbindChannelToUser(channel);

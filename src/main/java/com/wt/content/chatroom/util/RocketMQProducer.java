@@ -13,6 +13,12 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+/**
+ * MQ生产者
+ *
+ * @author 朱群
+ * @date 2020/11/6
+ */
 @Component
 @Slf4j
 @Order(2)
@@ -29,6 +35,12 @@ public class RocketMQProducer implements ApplicationRunner {
     @Autowired
     private JacksonUtil jacksonUtil;
 
+    /**
+     * 发送顺序消息
+     *
+     * @param message
+     * @return boolean
+     */
     public <T extends WebsocketInboundMessage> boolean sendOrderedMessage(T message) {
         Message msg = new Message(rocketMQConfig.getProducerTopic(), jacksonUtil.writeValueAsBytes(message));
         try {

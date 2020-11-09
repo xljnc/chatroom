@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
- * @author 一贫
+ * 消息处理服务
+ *
+ * @author 朱群
  * @date 2020/11/6
  */
 @Service
@@ -27,6 +29,7 @@ public class WebsocketMessageServiceImpl implements WebsocketMessageService {
         //用户绑定消息，直接丢弃不做处理
         if (message.getTopic().equals(userConnectTopic))
             return;
+        //其他消息发送到mq里，由业务方消息处理
         mqProducer.sendOrderedMessage(message);
     }
 }

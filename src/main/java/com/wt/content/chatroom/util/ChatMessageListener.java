@@ -13,6 +13,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * 消息处理服务
+ *
+ * @author 朱群
+ * @date 2020/11/6
+ */
 @Component
 @Slf4j
 public class ChatMessageListener implements MessageListenerConcurrently {
@@ -23,6 +29,15 @@ public class ChatMessageListener implements MessageListenerConcurrently {
     @Autowired
     private JacksonUtil jacksonUtil;
 
+    /**
+     * 处理收到的MQ中的WebsocketOutboundMessage
+     * 广播模式
+     * 从WebSocketChannelHolder获取当前服务器上的用户链接，发送消息
+     *
+     * @param msgs    消费的消息列表，最大长度由配置文件中的consumeMessageBatchMaxSize控制
+     * @param context
+     * @return org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus
+     */
     @Override
     public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
         try {
@@ -32,7 +47,9 @@ public class ChatMessageListener implements MessageListenerConcurrently {
                     continue;
                 for (String userId : message.getUserIds()) {
                     Channel channel = webSocketChannelHolder.getChannelByUser(userId);
-                    channel.writeAndFlush(message);
+                    //用户可能不在当前服务器上
+                    if (channel != null)
+                        channel.writeAndFlush(message);
                 }
             }
         } catch (Exception e) {

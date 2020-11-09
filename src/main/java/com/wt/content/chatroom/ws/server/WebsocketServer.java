@@ -31,7 +31,7 @@ import java.net.InetSocketAddress;
 /**
  * 聊天室 Netty Server
  *
- * @author 一贫
+ * @author 朱群
  * @date 2020/11/5
  */
 @Component
@@ -59,7 +59,7 @@ public class WebsocketServer implements ApplicationRunner, ApplicationListener<C
     /**
      * 启动 Netty Server
      *
-     * @author 一贫
+     * @author 朱群
      * @date 2020/11/5 11:22
      */
     @Override
@@ -78,8 +78,15 @@ public class WebsocketServer implements ApplicationRunner, ApplicationListener<C
 
     /**
      * 初始化 Netty Server
+     * 主要关注 serverBootstrap.childHandler
+     * pipeline.addLast(websocketUserHandler);
+     * pipeline.addLast(websocketMessageHandler);
+     * websocketUserHandler用于用户校验，并将受到的WebSocketFrame转换成WebsocketInboundMessage
+     * websocketMessageHandler用户消息处理
+     * 根据实际情况对这2个handler进行扩展
+     * 也可以添加新的handler,Netty的handler是链式处理，由ChannelPipeline的上一个handler传递给下一个handler
      *
-     * @author 一贫
+     * @author 朱群
      * @date
      */
     private void init() throws Exception {
@@ -108,7 +115,7 @@ public class WebsocketServer implements ApplicationRunner, ApplicationListener<C
     /**
      * 停止 Netty Server
      *
-     * @author 一贫
+     * @author 朱群
      * @date 2020/11/5 11:22
      */
     @Override

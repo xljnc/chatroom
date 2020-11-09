@@ -3,21 +3,25 @@ package com.wt.content.chatroom.ws.handler;
 import com.wt.content.chatroom.util.JacksonUtil;
 import com.wt.content.chatroom.ws.holder.WebSocketChannelHolder;
 import com.wt.content.chatroom.ws.protocol.WebsocketInboundMessage;
-import io.netty.channel.*;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
-import io.netty.handler.codec.http.websocketx.*;
+import io.netty.handler.codec.http.websocketx.PingWebSocketFrame;
+import io.netty.handler.codec.http.websocketx.PongWebSocketFrame;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.net.SocketAddress;
-
 /**
- * @author 一贫
+ * @author 朱群
  * @date 2020/11/5
  */
 @ChannelHandler.Sharable
