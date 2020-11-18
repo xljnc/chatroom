@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.core.annotation.Order;
@@ -37,6 +38,7 @@ import java.net.InetSocketAddress;
 @Component
 @Slf4j
 @Order(3)
+@ConditionalOnProperty(prefix = "application.runner", value = "enabled", havingValue = "true", matchIfMissing = true)
 public class WebsocketServer implements ApplicationRunner, ApplicationListener<ContextClosedEvent> {
 
     private ServerBootstrap serverBootstrap;
