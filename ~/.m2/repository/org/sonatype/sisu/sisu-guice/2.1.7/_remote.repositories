@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Nov 06 15:03:51 CST 2020
+sisu-guice-2.1.7.pom>public-plugin=
+sisu-guice-2.1.7-noaop.jar>public-plugin=
